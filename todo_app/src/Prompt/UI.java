@@ -49,7 +49,7 @@ public class UI {
         PromptScanner.clear();
     }
 
-    public static Task addTask() throws InterruptedException {
+    public static Task addTask(){
         PromptScanner.clear();
         System.out.println("=======Add Task=======");
         System.out.println("Title: ");
@@ -64,7 +64,8 @@ public class UI {
         return new Task(0, title, description, deadline, priority, false);
     }
 
-    public static void removeTask() throws SQLException {
+    public static void removeTask() {
+        System.out.println("Choose the task id to remove: ");
         int choosedId = PromptScanner.get().nextInt();
         todo.remove(choosedId);
         System.out.println("Removed Task Id: " + choosedId);
@@ -73,7 +74,7 @@ public class UI {
         PromptScanner.clear();
     }
 
-    public static void updateTask() throws SQLException {
+    public static void updateTask() {
         System.out.println("Choose the task id to be modified: ");
         int choosedId = PromptScanner.get().nextInt();
         System.out.println("Choose the task state(true/false for done/undone): ");
