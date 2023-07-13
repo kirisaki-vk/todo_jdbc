@@ -21,12 +21,12 @@ public class todo {
 
     public static List<Task> getAll() {
         List<Task> tasksList = new ArrayList<>();
-        String query = "SELECT * FROM todo_app ORDER BY id;";
+        String query = "SELECT * FROM todo ORDER BY id;";
         try {
             ResultSet result = ConnectionProvider.getConnection().createStatement().executeQuery(query);
             while(result.next()) {
                 int id = result.getInt("id");
-                String name = result.getString("name");
+                String name = result.getString("title");
                 String description = result.getString("description");
                 Timestamp deadline = result.getTimestamp("deadline");
                 int priority = result.getInt("priority");
@@ -42,7 +42,7 @@ public class todo {
     }
 
     public static Task get(int id) throws SQLException {
-        String query = "SELECT * FROM todo_app WHERE id=?;";
+        String query = "SELECT * FROM todo WHERE id=?;";
         PreparedStatement statement = ConnectionProvider
                 .getConnection()
                 .prepareStatement(query);
@@ -50,7 +50,7 @@ public class todo {
         ResultSet result = statement.executeQuery();
         statement.close();
         result.next();
-        String name = result.getString("name");
+        String name = result.getString("title");
         String description = result.getString("description");
         Timestamp deadline = result.getTimestamp("deadline");
         int priority = result.getInt("priority");
@@ -78,7 +78,7 @@ public class todo {
         ResultSet result = statement.executeQuery();
         statement.close();
         result.next();
-        String name = result.getString("name");
+        String name = result.getString("title");
         String description = result.getString("description");
         Timestamp deadline = result.getTimestamp("deadline");
         int priority = result.getInt("priority");
@@ -88,12 +88,12 @@ public class todo {
 
     public static List<Task> get(Boolean done) throws SQLException {
         List<Task> tasksList = new ArrayList<>();
-        String query = "SELECT * FROM todo_app WHERE done="+done+";";
+        String query = "SELECT * FROM todo WHERE done="+done+";";
         try {
             ResultSet result = ConnectionProvider.getConnection().createStatement().executeQuery(query);
             while(result.next()) {
                 int id = result.getInt("id");
-                String name = result.getString("name");
+                String name = result.getString("title");
                 String description = result.getString("description");
                 Timestamp deadline = result.getTimestamp("deadline");
                 int priority = result.getInt("priority");
@@ -117,7 +117,7 @@ public class todo {
         statement.close();
         while (result.next()) {
             int id = result.getInt("id");
-            String name = result.getString("name");
+            String name = result.getString("title");
             String description = result.getString("description");
             Timestamp deadline = result.getTimestamp("deadline");
             int priority = result.getInt("priority");
