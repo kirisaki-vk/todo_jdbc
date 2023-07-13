@@ -107,5 +107,24 @@ public class todo {
         return tasksList;
     }
 
-
+    public static List<Task> getToday() throws SQLException {
+        List<Task> tasksList = new ArrayList<>();
+        String query = "DELETE FROM todo WHERE date_part(deadline)=current_date";
+        PreparedStatement statement = ConnectionProvider
+                .getConnection()
+                .prepareStatement(query);
+        ResultSet result = statement.executeQuery();
+        statement.close();
+        while (result.next()) {
+            int id = result.getInt("id");
+            String name = result.getString("name");
+            String description = result.getString("description");
+            Timestamp deadline = result.getTimestamp("deadline");
+            int priority = result.getInt("priority");
+            Boolean done = result.getBoolean("done");
+            tasksList.add(new Task(id, name, description, deadline, priority, done));
+        }
+        result.close();
+        return tasksList;
+    }
 }
