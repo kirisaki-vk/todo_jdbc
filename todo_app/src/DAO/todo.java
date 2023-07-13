@@ -8,13 +8,13 @@ import java.util.List;
 
 public class todo {
 
-    public static void insert(String title, String description, Date deadline, int priority, Boolean done) throws SQLException {
+    public static void insert(Task task) throws SQLException {
         PreparedStatement insertStatement = ConnectionProvider.getConnection().prepareStatement("INSERT INTO todo(title, description, deadline, priority, done) VALUES ( ?, ?, ?, ?, ?);");
-        insertStatement.setString(1, title);
-        insertStatement.setString(2, description);
-        insertStatement.setDate(3, deadline);
-        insertStatement.setInt(4, priority);
-        insertStatement.setBoolean(5, done);
+        insertStatement.setString(1, task.title());
+        insertStatement.setString(2, task.description());
+        insertStatement.setTimestamp(3, task.deadline());
+        insertStatement.setInt(4, task.priority());
+        insertStatement.setBoolean(5, task.done());
         insertStatement.execute();
         insertStatement.close();
     }
