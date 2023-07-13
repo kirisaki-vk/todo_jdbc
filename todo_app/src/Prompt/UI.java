@@ -1,7 +1,9 @@
 package Prompt;
 
 import DAO.Task;
+import DAO.todo;
 
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -56,4 +58,9 @@ public class UI {
         return new Task(id, title, description, deadline, priority, false);
     }
 
+    public static void removeTask() throws SQLException {
+        int choosedId = PromptScanner.get().nextInt();
+        Task removedTask = todo.remove(choosedId);
+        System.out.println("Removed Task: " + removedTask.title());
+    }
 }
