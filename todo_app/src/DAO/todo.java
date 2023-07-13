@@ -86,9 +86,9 @@ public class todo {
         return new Task(id, name, description, deadline, priority, done);
     }
 
-    public static List<Task> getDone() throws SQLException {
+    public static List<Task> get(Boolean done) throws SQLException {
         List<Task> tasksList = new ArrayList<>();
-        String query = "SELECT * FROM todo_app WHERE done=t;";
+        String query = "SELECT * FROM todo_app WHERE done="+done+";";
         try {
             ResultSet result = ConnectionProvider.getConnection().createStatement().executeQuery(query);
             while(result.next()) {
@@ -97,8 +97,8 @@ public class todo {
                 String description = result.getString("description");
                 Timestamp deadline = result.getTimestamp("deadline");
                 int priority = result.getInt("priority");
-                Boolean done = result.getBoolean("done");
-                tasksList.add(new Task(id, name, description, deadline, priority, done));
+                Boolean isdone = result.getBoolean("done");
+                tasksList.add(new Task(id, name, description, deadline, priority, isdone));
             }
             result.close();
         } catch (SQLException e) {
@@ -106,4 +106,6 @@ public class todo {
         }
         return tasksList;
     }
+
+
 }
