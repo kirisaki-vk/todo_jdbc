@@ -8,25 +8,25 @@ import java.util.List;
 
 public class todo {
 
-    public static void insert(String title, String description, Date deadline, int priority, Boolean done) throws SQLException {
+    public static void insert(Task task) throws SQLException {
         PreparedStatement insertStatement = ConnectionProvider.getConnection().prepareStatement("INSERT INTO todo(title, description, deadline, priority, done) VALUES ( ?, ?, ?, ?, ?);");
-        insertStatement.setString(1, title);
-        insertStatement.setString(2, description);
-        insertStatement.setDate(3, deadline);
-        insertStatement.setInt(4, priority);
-        insertStatement.setBoolean(5, done);
+        insertStatement.setString(1, task.title());
+        insertStatement.setString(2, task.description());
+        insertStatement.setTimestamp(3, task.deadline());
+        insertStatement.setInt(4, task.priority());
+        insertStatement.setBoolean(5, task.done());
         insertStatement.execute();
         insertStatement.close();
     }
 
     public static List<Task> getAll() {
         List<Task> tasksList = new ArrayList<>();
-        String query = "SELECT * FROM todo_app ORDER BY id;";
+        String query = "SELECT * FROM todo ORDER BY priority;";
         try {
             ResultSet result = ConnectionProvider.getConnection().createStatement().executeQuery(query);
             while(result.next()) {
                 int id = result.getInt("id");
-                String name = result.getString("name");
+                String name = result.getString("title");
                 String description = result.getString("description");
                 Timestamp deadline = result.getTimestamp("deadline");
                 int priority = result.getInt("priority");
@@ -42,7 +42,7 @@ public class todo {
     }
 
     public static Task get(int id) throws SQLException {
-        String query = "SELECT * FROM todo_app WHERE id=?;";
+        String query = "SELECT * FROM todo WHERE id=?;";
         PreparedStatement statement = ConnectionProvider
                 .getConnection()
                 .prepareStatement(query);
@@ -50,7 +50,7 @@ public class todo {
         ResultSet result = statement.executeQuery();
         statement.close();
         result.next();
-        String name = result.getString("name");
+        String name = result.getString("title");
         String description = result.getString("description");
         Timestamp deadline = result.getTimestamp("deadline");
         int priority = result.getInt("priority");
@@ -78,7 +78,7 @@ public class todo {
         ResultSet result = statement.executeQuery();
         statement.close();
         result.next();
-        String name = result.getString("name");
+        String name = result.getString("title");
         String description = result.getString("description");
         Timestamp deadline = result.getTimestamp("deadline");
         int priority = result.getInt("priority");
@@ -88,12 +88,12 @@ public class todo {
 
     public static List<Task> get(Boolean done) throws SQLException {
         List<Task> tasksList = new ArrayList<>();
-        String query = "SELECT * FROM todo_app WHERE done="+done+";";
+        String query = "SELECT * FROM todo WHERE done="+done+";";
         try {
             ResultSet result = ConnectionProvider.getConnection().createStatement().executeQuery(query);
             while(result.next()) {
                 int id = result.getInt("id");
-                String name = result.getString("name");
+                String name = result.getString("title");
                 String description = result.getString("description");
                 Timestamp deadline = result.getTimestamp("deadline");
                 int priority = result.getInt("priority");
@@ -117,7 +117,7 @@ public class todo {
         statement.close();
         while (result.next()) {
             int id = result.getInt("id");
-            String name = result.getString("name");
+            String name = result.getString("title");
             String description = result.getString("description");
             Timestamp deadline = result.getTimestamp("deadline");
             int priority = result.getInt("priority");

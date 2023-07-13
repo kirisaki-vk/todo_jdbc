@@ -17,7 +17,7 @@ public class ConnectionProvider {
     public static Connection getConnection() throws SQLException{
         Credentials credentials = new Credentials();
         return DriverManager.getConnection(
-                "jdbc:postgres://" + credentials.HOST + "/" + credentials.DATABASE,
+                "jdbc:postgresql://" + credentials.HOST + "/" + credentials.DATABASE,
                 credentials.USER,
                 credentials.PASSWORD
         );
