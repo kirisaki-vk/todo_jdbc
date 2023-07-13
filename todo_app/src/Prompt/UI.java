@@ -18,6 +18,8 @@ public class UI {
         System.out.println("6. Show undone Task(s)");
         System.out.println("7. Show today's Task(s)");
         System.out.println("8. Quit");
+        System.out.println("=======================");
+        System.out.println("Enter your choice: ");
     }
 
     public static void showTasks(List<Task> tasks) {
@@ -42,9 +44,13 @@ public class UI {
         System.out.println("Priority: " + task.priority());
         System.out.println("Done: " + task.done());
         System.out.println("=====================");
+        System.out.println("Press enter to go to the menu");
+        PromptScanner.get().nextLine();
+        PromptScanner.clear();
     }
 
     public static Task addTask() throws InterruptedException {
+        PromptScanner.clear();
         System.out.println("=======Add Task=======");
         System.out.println("Title: ");
         PromptScanner.get().nextLine();
@@ -60,15 +66,21 @@ public class UI {
 
     public static void removeTask() throws SQLException {
         int choosedId = PromptScanner.get().nextInt();
-        Task removedTask = todo.remove(choosedId);
-        System.out.println("Removed Task: " + removedTask.title());
+        todo.remove(choosedId);
+        System.out.println("Removed Task Id: " + choosedId);
+        System.out.println("Task removed Successfully press enter to go to Menu");
+        PromptScanner.get().nextLine();
+        PromptScanner.clear();
     }
 
     public static void updateTask() throws SQLException {
         System.out.println("Choose the task id to be modified: ");
         int choosedId = PromptScanner.get().nextInt();
-        System.out.println("Choose the task state(empty for not done, 'true' if done): ");
-        Boolean newState = PromptScanner.get().hasNext();
+        System.out.println("Choose the task state(true/false for done/undone): ");
+        Boolean newState = Boolean.valueOf(PromptScanner.get().nextLine());
         todo.update(choosedId, newState);
+        System.out.println("Update done successfully, press enter return to the menu");
+        PromptScanner.get().nextLine();
+        PromptScanner.clear();
     }
 }
