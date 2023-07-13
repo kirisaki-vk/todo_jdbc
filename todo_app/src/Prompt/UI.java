@@ -43,24 +43,31 @@ public class UI {
         System.out.println("=====================");
     }
 
-    public static Task addTask() {
+    public static Task addTask() throws InterruptedException {
         System.out.println("=======Add Task=======");
-        System.out.println("ID: ");
-        int id = PromptScanner.get().nextInt();
         System.out.println("Title: ");
-        String title = PromptScanner.get().next();
+        PromptScanner.get().nextLine();
+        String title = PromptScanner.get().nextLine();
         System.out.println("Description: ");
-        String description = PromptScanner.get().next();
-        System.out.println("Deadline: ");
-        Timestamp deadline = Timestamp.valueOf(PromptScanner.get().next());
+        String description = PromptScanner.get().nextLine();
+        System.out.println("Deadline:(Timestamp format must be yyyy-mm-dd hh:mm:ss) ");
+        Timestamp deadline = Timestamp.valueOf(PromptScanner.get().nextLine());
         System.out.println("Priority: ");
         int priority = PromptScanner.get().nextInt();
-        return new Task(id, title, description, deadline, priority, false);
+        return new Task(0, title, description, deadline, priority, false);
     }
 
     public static void removeTask() throws SQLException {
         int choosedId = PromptScanner.get().nextInt();
         Task removedTask = todo.remove(choosedId);
         System.out.println("Removed Task: " + removedTask.title());
+    }
+
+    public static void updateTask() throws SQLException {
+        System.out.println("Choose the task id to be modified: ");
+        int choosedId = PromptScanner.get().nextInt();
+        System.out.println("Choose the task state(empty for not done, 'true' if done): ");
+        Boolean newState = PromptScanner.get().hasNext();
+        todo.update(choosedId, newState);
     }
 }
