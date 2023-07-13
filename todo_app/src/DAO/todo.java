@@ -85,4 +85,25 @@ public class todo {
         Boolean done = result.getBoolean("done");
         return new Task(id, name, description, deadline, priority, done);
     }
+
+    public static List<Task> getDone() throws SQLException {
+        List<Task> tasksList = new ArrayList<>();
+        String query = "SELECT * FROM todo_app WHERE done=t;";
+        try {
+            ResultSet result = ConnectionProvider.getConnection().createStatement().executeQuery(query);
+            while(result.next()) {
+                int id = result.getInt("id");
+                String name = result.getString("name");
+                String description = result.getString("description");
+                Timestamp deadline = result.getTimestamp("deadline");
+                int priority = result.getInt("priority");
+                Boolean done = result.getBoolean("done");
+                tasksList.add(new Task(id, name, description, deadline, priority, done));
+            }
+            result.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return tasksList;
+    }
 }
