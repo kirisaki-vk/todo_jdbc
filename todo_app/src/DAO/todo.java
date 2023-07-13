@@ -69,21 +69,13 @@ public class todo {
         return statement.executeUpdate();
     }
 
-    public static Task remove(int id) throws SQLException {
-        String query = "DELETE FROM todo WHERE id=? RETURNING *";
+    public static void remove(int id) throws SQLException {
+        String query = "DELETE FROM todo WHERE id=?";
         PreparedStatement statement = ConnectionProvider
                 .getConnection()
                 .prepareStatement(query);
         statement.setInt(1, id);
-        ResultSet result = statement.executeQuery();
-        statement.close();
-        result.next();
-        String name = result.getString("title");
-        String description = result.getString("description");
-        Timestamp deadline = result.getTimestamp("deadline");
-        int priority = result.getInt("priority");
-        Boolean done = result.getBoolean("done");
-        return new Task(id, name, description, deadline, priority, done);
+        statement.executeUpdate();
     }
 
     public static List<Task> get(Boolean done) throws SQLException {

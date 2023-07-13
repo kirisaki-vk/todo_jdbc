@@ -60,8 +60,8 @@ public class UI {
 
     public static void removeTask() throws SQLException {
         int choosedId = PromptScanner.get().nextInt();
-        Task removedTask = todo.remove(choosedId);
-        System.out.println("Removed Task: " + removedTask.title());
+        todo.remove(choosedId);
+        System.out.println("Removed Task Id: " + choosedId);
     }
 
     public static void updateTask() throws SQLException {
