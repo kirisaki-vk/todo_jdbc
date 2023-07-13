@@ -24,15 +24,17 @@ public class Main {
                     UI.updateTask();
                     break;
                 case 4:
+                    UI.showTasks(todo.getAll());
+                case 5:
                     UI.showTasks(todo.get(true));
                     break;
-                case 5:
+                case 6:
                     UI.showTasks(todo.get(false));
                     break;
-                case 6:
+                case 7:
                     UI.showTasks(todo.getToday());
                     break;
-                case 7:
+                case 8:
                     System.exit(0);
                     break;
             }

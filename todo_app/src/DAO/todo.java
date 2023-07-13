@@ -21,7 +21,7 @@ public class todo {
 
     public static List<Task> getAll() {
         List<Task> tasksList = new ArrayList<>();
-        String query = "SELECT * FROM todo ORDER BY id;";
+        String query = "SELECT * FROM todo ORDER BY priority;";
         try {
             ResultSet result = ConnectionProvider.getConnection().createStatement().executeQuery(query);
             while(result.next()) {
